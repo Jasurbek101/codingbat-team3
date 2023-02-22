@@ -1,4 +1,4 @@
-package uz.pdp.codingbatteam3.entity.model.ENUM;
+package uz.pdp.codingbatteam3.entity.model.Enum;
 
 public enum RoleEnum {
     USER,
