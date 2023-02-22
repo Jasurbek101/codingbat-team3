@@ -1,13 +1,17 @@
 package uz.pdp.codingbatteam3.service;
 
+import uz.pdp.codingbatteam3.entity.UserEntity;
+
+import java.util.List;
+
 public interface BaseService<T, R> {
-    R getList();
+    List<R> list();
 
-    R add(T t);
+    boolean add(T t);
 
-    R deleteById(Integer id);
+    boolean delete(Integer id);
 
     R update(Integer id, T t);
 
-    R getById(Integer id);
+    R get(Integer id);
 }
