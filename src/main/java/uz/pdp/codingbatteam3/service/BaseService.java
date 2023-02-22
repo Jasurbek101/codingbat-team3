@@ -14,4 +14,5 @@ public interface BaseService<T, R> {
     R update(Integer id, T t);
 
     R get(Integer id);
+    R getByName(String name);
 }

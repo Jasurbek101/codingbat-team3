@@ -11,8 +11,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Builder
 @Table(name = "subjects")
+@Builder
 public class SubjectEntity extends BaseEntity {
     private String title;
     @OneToMany(

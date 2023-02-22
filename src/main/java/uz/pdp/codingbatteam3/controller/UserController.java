@@ -25,7 +25,7 @@ public class UserController {
             @ModelAttribute UserRegisterDTO userRegisterDTO
     ) {
         boolean isSuccess = userService.add(userRegisterDTO);
-        model.addAttribute("user", userService.getByEmail(
+        model.addAttribute("user", userService.getByName(
                 userRegisterDTO.getEmail()
         ));
 
