@@ -1,4 +1,4 @@
-package uz.pdp.codingbatteam3.model.dto;
+package uz.pdp.codingbatteam3.entity.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;

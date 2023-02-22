@@ -1,14 +1,15 @@
 package uz.pdp.codingbatteam3.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import uz.pdp.codingbatteam3.entity.UserEntity;
-import uz.pdp.codingbatteam3.model.dto.UserRegisterDTO;
+import uz.pdp.codingbatteam3.entity.dto.UserRegisterDTO;
 import uz.pdp.codingbatteam3.service.UserService;
 
 import java.util.List;
-
+@Controller
 @RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {

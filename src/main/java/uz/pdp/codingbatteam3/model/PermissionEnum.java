@@ -22,5 +22,5 @@ public enum PermissionEnum {
     DELETE_QUESTION,
     DELETE_ADMIN,
     DELETE_USER,
-
+    SUPER_ADMIN
 }

@@ -3,9 +3,9 @@ package uz.pdp.codingbatteam3.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import uz.pdp.codingbatteam3.admin.common.exception.RecordNotFoundException;
+import uz.pdp.codingbatteam3.common.exception.RecordNotFoundException;
 import uz.pdp.codingbatteam3.entity.UserEntity;
-import uz.pdp.codingbatteam3.model.dto.UserRegisterDTO;
+import uz.pdp.codingbatteam3.entity.dto.UserRegisterDTO;
 import uz.pdp.codingbatteam3.repository.UserRepository;
 
 import java.util.List;
