@@ -16,6 +16,7 @@ import java.util.List;
 @Builder
 public class TopicEntity extends BaseEntity {
     private String name;
+    private String description;
     @ManyToOne
     private SubjectEntity subjectEntity;
     @OneToMany(

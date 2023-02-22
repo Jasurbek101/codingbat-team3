@@ -4,8 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uz.pdp.codingbatteam3.entity.SubjectEntity;
+import uz.pdp.codingbatteam3.entity.TopicEntity;
 import uz.pdp.codingbatteam3.service.SubjectService;
 
 import java.util.List;
@@ -13,14 +15,15 @@ import java.util.List;
 @Controller
 @RequestMapping("/")
 @RequiredArgsConstructor
-public class HomeController {
+public class SubjectController {
     private final SubjectService subjectService;
-    private final String java = "Java";
-    @GetMapping
-    public String home(Model model){
+
+    @GetMapping("/{subjectTitle}")
+    private String getSubjects(@PathVariable String subjectTitle, Model model){
         List<SubjectEntity> subjectList = subjectService.list();
+        List<TopicEntity> topicList = subjectService.getByTitle(subjectTitle).getTopicEntities();
         model.addAttribute("subjectList",subjectList);
-        model.addAttribute("topicList",subjectService.getByTitle(java).getTopicEntities());
+        model.addAttribute("topicList",topicList);
         return "home";
     }
 
