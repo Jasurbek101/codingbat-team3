@@ -1,9 +1,9 @@
-package uz.pdp.codingbatteam3.model.dto;
+package uz.pdp.codingbatteam3.entity.model.DTO;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
-import uz.pdp.codingbatteam3.model.PermissionEnum;
-import uz.pdp.codingbatteam3.model.RoleEnum;
+import uz.pdp.codingbatteam3.entity.model.ENUM.PermissionEnum;
+import uz.pdp.codingbatteam3.entity.model.ENUM.RoleEnum;
 
 import java.util.List;
 

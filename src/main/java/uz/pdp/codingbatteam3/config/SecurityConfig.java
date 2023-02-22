@@ -23,12 +23,12 @@ import uz.pdp.codingbatteam3.service.AuthService;
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final AuthService authService;
-    private static final String[] WHITE_LIST = new String[]{
-//            "/login",
-//            "/register",
-//            "/auth/sign_in",
-//            "/api/user/add"
-    };
+//    private static final String[] WHITE_LIST = new String[]{
+//            "/auth/login",
+//            "/auth/register",
+//            "/"
+////            "/api/user/add"
+//    };
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -40,13 +40,13 @@ public class SecurityConfig {
         http
                 .csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers(HttpMethod.GET, "/auth/login", "/auth/register", "/").permitAll()
-                .requestMatchers(HttpMethod.POST, "/user/add").permitAll()
+                .requestMatchers(HttpMethod.GET, "/auth/login","/auth/register", "/").permitAll()
+                .requestMatchers(HttpMethod.POST,  "/auth/register").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
-                .formLogin().loginPage("/login").loginProcessingUrl("/login")
-                .defaultSuccessUrl("/home", true).permitAll()
+                .formLogin().loginPage("/auth/login").loginProcessingUrl("/auth/login")
+                .defaultSuccessUrl("/", true).permitAll()
                 .and()
                 .logout()
                 .logoutUrl("/logout")

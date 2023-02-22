@@ -4,15 +4,15 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import uz.pdp.codingbatteam3.model.PermissionEnum;
-import uz.pdp.codingbatteam3.model.RoleEnum;
-import uz.pdp.codingbatteam3.model.dto.UserRegisterDTO;
+import uz.pdp.codingbatteam3.entity.model.ENUM.PermissionEnum;
+import uz.pdp.codingbatteam3.entity.model.ENUM.RoleEnum;
+import uz.pdp.codingbatteam3.entity.model.DTO.UserRegisterDTO;
 
 import java.util.Collection;
 import java.util.List;
 
-import static uz.pdp.codingbatteam3.model.PermissionEnum.*;
-import static uz.pdp.codingbatteam3.model.RoleEnum.USER;
+import static uz.pdp.codingbatteam3.entity.model.ENUM.PermissionEnum.*;
+import static uz.pdp.codingbatteam3.entity.model.ENUM.RoleEnum.USER;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,7 +27,7 @@ public class UserEntity extends BaseEntity implements UserDetails {
     @Column(nullable = false)
     private String password;
     @Enumerated(EnumType.STRING)
-    private List<RoleEnum> roleEnum;
+    private List<RoleEnum> roleEnumList;
     @Enumerated(EnumType.STRING)
     private List<PermissionEnum> permissionEnumList;
 
@@ -37,7 +37,7 @@ public class UserEntity extends BaseEntity implements UserDetails {
                     .builder()
                     .email(userRegisterDTO.getEmail())
                     .password(userRegisterDTO.getPassword())
-                    .roleEnum(List.of(
+                    .roleEnumList(List.of(
                             USER
                     ))
                     .permissionEnumList(List.of(
@@ -51,7 +51,7 @@ public class UserEntity extends BaseEntity implements UserDetails {
                 .builder()
                 .email(userRegisterDTO.getEmail())
                 .password(userRegisterDTO.getPassword())
-                .roleEnum(userRegisterDTO.getRoles())
+                .roleEnumList(userRegisterDTO.getRoles())
                 .permissionEnumList(userRegisterDTO.getPermissions())
                 .build();
     }

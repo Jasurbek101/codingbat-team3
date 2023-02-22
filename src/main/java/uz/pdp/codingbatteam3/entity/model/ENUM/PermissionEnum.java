@@ -1,4 +1,4 @@
-package uz.pdp.codingbatteam3.model;
+package uz.pdp.codingbatteam3.entity.model.ENUM;
 
 public enum PermissionEnum {
     ADD_TOPIC,
@@ -22,5 +22,7 @@ public enum PermissionEnum {
     DELETE_QUESTION,
     DELETE_ADMIN,
     DELETE_USER,
+
+    SUPER_ADMIN
 
 }

@@ -2,17 +2,18 @@ package uz.pdp.codingbatteam3.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uz.pdp.codingbatteam3.model.dto.UserRegisterDTO;
+import uz.pdp.codingbatteam3.entity.model.DTO.UserRegisterDTO;
 import uz.pdp.codingbatteam3.service.UserService;
 
 @Controller
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
-
     private final UserService userService;
 
     @GetMapping("/login")
@@ -20,12 +21,22 @@ public class AuthController {
         return "login";
     }
 
-    @GetMapping("/register")
+    @PostMapping("/register")
     public String register(
-            @ModelAttribute UserRegisterDTO user
-            ){
-        if (userService.add(user)) return "redirect:/auth/register";
+            @ModelAttribute UserRegisterDTO userRegisterDTO,
+            Model model
+    ) {
+        if (userService.add(userRegisterDTO)) {
+            model.addAttribute("user", userService.getByEmail(
+                    userRegisterDTO.getEmail()
+            ));
+            return "home";
+        }
+        return "redirect:/auth/register";
+    }
 
-        return "home";
+    @GetMapping("/register")
+    public String register() {
+        return "register";
     }
 }

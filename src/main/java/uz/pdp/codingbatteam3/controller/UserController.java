@@ -1,21 +1,25 @@
 package uz.pdp.codingbatteam3.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import uz.pdp.codingbatteam3.entity.UserEntity;
-import uz.pdp.codingbatteam3.model.dto.UserRegisterDTO;
+import uz.pdp.codingbatteam3.entity.model.DTO.UserRegisterDTO;
 import uz.pdp.codingbatteam3.service.UserService;
 
 import java.util.List;
 
 @RequestMapping("/user")
 @RequiredArgsConstructor
+@Controller
 public class UserController {
     private final UserService userService;
 
     @ResponseBody
     @PostMapping("/add")
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
     public String addUser(
             Model model,
             @ModelAttribute UserRegisterDTO userRegisterDTO
