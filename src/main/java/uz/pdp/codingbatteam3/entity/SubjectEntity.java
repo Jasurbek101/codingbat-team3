@@ -12,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Builder
+@Table(name = "subjects")
 public class SubjectEntity extends BaseEntity {
     private String title;
     @OneToMany(
