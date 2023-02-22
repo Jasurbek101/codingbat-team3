@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import uz.pdp.codingbatteam3.common.exception.RecordNotFoundException;
 
+@Controller
+@ControllerAdvice
 public class CommonExceptionHandler {
     @ExceptionHandler(RecordNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
