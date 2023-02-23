@@ -32,14 +32,15 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
+                .csrf()
+                .disable()
                 .authorizeHttpRequests()
                 .requestMatchers(HttpMethod.GET, "/","/auth/login", "/auth/register").permitAll()
                 .requestMatchers(HttpMethod.POST, "/user/add", "/auth/register").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
-                .formLogin().loginPage("/auth/login").loginProcessingUrl("/auth/login")
+                .formLogin().loginPage("/auth/login").loginProcessingUrl("/process-login").failureForwardUrl("/").permitAll()
                 .defaultSuccessUrl("/", true).permitAll()
                 .and()
                 .logout()
@@ -64,11 +65,4 @@ public class SecurityConfig {
         authenticationManagerBuilder.authenticationProvider(authenticationProvider());
         return authenticationManagerBuilder.build();
     }
-
-    @Bean
-    public ObjectMapper objectMapper() {
-        return new ObjectMapper();
-    }
-
-
 }

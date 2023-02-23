@@ -8,9 +8,11 @@
 <h1>
     REGISTER
 </h1>>
-<form action="/auth/register" method="post">
+<form action="/auth/register" method="post" enctype="multipart/form-data">
     <input type="text" placeholder="username" id="email" name="email">
     <input type="password" placeholder="password" id="password" name="password">
+    <input type="file" name="logo">
+
     <button type="submit" name="Submit" value="Register">Register</button>
 </form>>
 </body>

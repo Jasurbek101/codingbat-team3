@@ -17,7 +17,6 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
-    @ResponseBody
     @PostMapping("/add")
     @PreAuthorize("hasRole('SUPER_ADMIN')")
     public String addUser(
@@ -32,7 +31,6 @@ public class UserController {
         return "";
     }
 
-    @ResponseBody
     @GetMapping("/list")
     @PreAuthorize("hasRole('SUPER_ADMIN') or hasRole('ADMIN')")
     public String list(
@@ -43,7 +41,6 @@ public class UserController {
         return "redirect:/";
     }
 
-    @ResponseBody
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('SUPER_ADMIN') or hasRole('ADMIN')")
     public String get(
@@ -55,7 +52,6 @@ public class UserController {
         return "";
     }
 
-    @ResponseBody
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('SUPER_ADMIN') or (hasRole('ADMIN') and hasAuthority('DELETE'))")
     public String delete(
@@ -67,7 +63,6 @@ public class UserController {
         return "";
     }
 
-    @ResponseBody
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('SUPER_ADMIN') or (hasRole('ADMIN') and hasAuthority('UPDATE'))")
     public String update(

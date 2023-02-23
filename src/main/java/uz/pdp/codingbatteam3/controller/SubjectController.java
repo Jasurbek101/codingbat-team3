@@ -18,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SubjectController {
     private final SubjectService subjectService;
-    @ResponseBody
+
     @GetMapping("/{subjectTitle}")
     private String getSubjects(
             @PathVariable String subjectTitle,

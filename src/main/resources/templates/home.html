@@ -23,7 +23,7 @@
     <nav>
         <ul>
             <li class=h2 th:each="subjectItem : ${subjectList}"><a
-                    th:href="@{/home/{subjectTitle}(subjectTitle=${subjectItem.getTitle()})}"
+                    th:href="@{/{subjectTitle}(subjectTitle=${subjectItem.getTitle()})}"
                     th:text="${subjectItem.getTitle()}"></a></li>
         </ul>
     </nav>
