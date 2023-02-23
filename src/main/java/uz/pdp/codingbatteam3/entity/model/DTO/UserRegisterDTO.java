@@ -1,13 +1,15 @@
-package uz.pdp.codingbatteam3.entity.dto;
+package uz.pdp.codingbatteam3.entity.model.DTO;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
-import uz.pdp.codingbatteam3.model.PermissionEnum;
-import uz.pdp.codingbatteam3.model.RoleEnum;
+import lombok.Setter;
+import uz.pdp.codingbatteam3.entity.model.Enum.PermissionEnum;
+import uz.pdp.codingbatteam3.entity.model.Enum.RoleEnum;
 
 import java.util.List;
 
 @Getter
+@Setter
 public class UserRegisterDTO {
     private String email;
     private String password;
@@ -16,7 +18,7 @@ public class UserRegisterDTO {
 
     @JsonIgnore
     public boolean isUser() {
-      return roles.isEmpty() && permissions.isEmpty();
+      return roles == null && permissions == null;
     }
 
 }

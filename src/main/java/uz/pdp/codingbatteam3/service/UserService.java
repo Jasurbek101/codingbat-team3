@@ -4,8 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import uz.pdp.codingbatteam3.common.exception.RecordNotFoundException;
+import uz.pdp.codingbatteam3.common.exception.UserAlreadyException;
 import uz.pdp.codingbatteam3.entity.UserEntity;
-import uz.pdp.codingbatteam3.entity.dto.UserRegisterDTO;
+import uz.pdp.codingbatteam3.entity.model.DTO.UserRegisterDTO;
 import uz.pdp.codingbatteam3.repository.UserRepository;
 
 import java.util.List;
@@ -18,18 +19,18 @@ public class UserService implements BaseService<UserRegisterDTO, UserEntity> {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public UserEntity getByEmail(String email){
+    @Override
+    public UserEntity getByName(String email) {
         Optional<UserEntity> optionalUserEntity = userRepository.findByEmail(email);
-        if (optionalUserEntity.isEmpty())
-            throw new RecordNotFoundException(String.format("user %s not found", email));
-        return optionalUserEntity.get();
+        return optionalUserEntity.orElseThrow(() ->
+                new RecordNotFoundException(String.format("user %s not found", email))
+        );
     }
 
     @Override
     public List<UserEntity> list() {
         List<UserEntity> userEntityList = userRepository.findAll();
         if (userEntityList.isEmpty()) throw new NullPointerException("Empty list");
-
         return userEntityList;
     }
 
@@ -38,12 +39,14 @@ public class UserService implements BaseService<UserRegisterDTO, UserEntity> {
         Optional<UserEntity> userEntity =
                 userRepository.findByEmail(userRegisterDTO.getEmail());
 
+        System.out.println(userEntity.toString());
         if (userEntity.isPresent())
-            throw new IllegalArgumentException(String.format("user %s already exists", userRegisterDTO.getEmail()));
+            throw new UserAlreadyException(String.format("user %s already exists", userRegisterDTO.getEmail()));
+
         UserEntity savedUserEntity = UserEntity.of(userRegisterDTO);
-        savedUserEntity.setPassword(passwordEncoder.encode(
-                userRegisterDTO.getPassword()
-        ));
+        savedUserEntity.setPassword(
+                passwordEncoder.encode(userRegisterDTO.getPassword())
+        );
         userRepository.save(savedUserEntity);
         return true;
 
@@ -70,11 +73,9 @@ public class UserService implements BaseService<UserRegisterDTO, UserEntity> {
 
     @Override
     public UserEntity get(Integer id) {
-        Optional<UserEntity> optionalUserEntity =
-                userRepository.findById(id);
-        if (optionalUserEntity.isEmpty())
-            throw new RecordNotFoundException(String.format("user %s not found", id));
-        return optionalUserEntity.get();
+        return userRepository.findById(id).orElseThrow(() ->
+                new RecordNotFoundException(String.format("user %s not found", id))
+        );
     }
 
 

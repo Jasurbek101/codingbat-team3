@@ -1,13 +1,11 @@
 package uz.pdp.codingbatteam3.entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
+import uz.pdp.codingbatteam3.entity.model.DTO.TopicRequestDTO;
+
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,10 +13,23 @@ import lombok.Setter;
 @Getter
 @Entity
 @Table(name = "topics")
-public class TopicEntity extends BaseEntity{
+@Builder
+public class TopicEntity extends BaseEntity {
     private String name;
+    private String description;
     @ManyToOne
     private SubjectEntity subjectEntity;
+    @OneToMany(
+            fetch = FetchType.EAGER,
+            mappedBy = "topicEntity",
+            cascade = CascadeType.ALL
+    )
+    private List<TaskEntity> taskEntities;
 
-
+    public TopicEntity of(TopicRequestDTO topicRequestDTO) {
+        return TopicEntity.builder()
+                .name(topicRequestDTO.getName())
+                .taskEntities(topicRequestDTO.getTaskEntities())
+                .build();
+    }
 }
