@@ -14,17 +14,20 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class SubjectService implements BaseService<SubjectRequestDTO, SubjectEntity> {
     private final SubjectRepository subjectRepository;
+
     @Override
     public List<SubjectEntity> list() {
         List<SubjectEntity> subjectList = subjectRepository.findAll();
-        if (subjectList.isEmpty()) throw new NullPointerException("Subjects not found");
+        if (subjectList.isEmpty()) throw new NullPointerException("Empty list");
         return subjectList;
     }
 
-    public SubjectEntity getByTitle(String title){
-        Optional<SubjectEntity> subjectByTitle = subjectRepository.findByTitle(title);
-        if(subjectByTitle.isEmpty()) throw new RecordNotFoundException("Subject not found");
-        return subjectByTitle.get();
+    @Override
+    public SubjectEntity getByName(String title) {
+        Optional<SubjectEntity> optionalSubjectEntity = subjectRepository.findByTitle(title);
+        return optionalSubjectEntity.orElseThrow(() ->
+                new RecordNotFoundException(String.format("subject %s not found", title))
+        );
     }
 
     @Override
