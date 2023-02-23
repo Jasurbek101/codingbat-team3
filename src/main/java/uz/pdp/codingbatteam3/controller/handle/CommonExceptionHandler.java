@@ -29,7 +29,7 @@ public class CommonExceptionHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     String nullPointer(Exception e, Model model) {
         model.addAttribute("message", e.getMessage());
-        return "404";
+        return "home";
     }
 
 }

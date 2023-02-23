@@ -21,7 +21,7 @@ public class UserService implements BaseService<UserRegisterDTO, UserEntity> {
 
     @Override
     public UserEntity getByName(String email) {
-        Optional<UserEntity> optionalUserEntity = userRepository.findByEmail(email);
+        Optional<UserEntity> optionalUserEntity = userRepository.findByUsername(email);
         return optionalUserEntity.orElseThrow(() ->
                 new RecordNotFoundException(String.format("user %s not found", email))
         );
@@ -37,7 +37,7 @@ public class UserService implements BaseService<UserRegisterDTO, UserEntity> {
     @Override
     public boolean add(UserRegisterDTO userRegisterDTO) {
         Optional<UserEntity> userEntity =
-                userRepository.findByEmail(userRegisterDTO.getEmail());
+                userRepository.findByUsername(userRegisterDTO.getEmail());
 
         System.out.println(userEntity.toString());
         if (userEntity.isPresent())

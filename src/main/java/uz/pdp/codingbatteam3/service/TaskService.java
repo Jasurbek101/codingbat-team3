@@ -5,14 +5,17 @@ import org.springframework.stereotype.Service;
 import uz.pdp.codingbatteam3.entity.TaskEntity;
 import uz.pdp.codingbatteam3.entity.model.DTO.TaskRequestDTO;
 import uz.pdp.codingbatteam3.repository.TaskRepository;
+import uz.pdp.codingbatteam3.service.badMessages.BadMessages;
 
 import java.util.List;
 @Service
 @RequiredArgsConstructor
-public class TaskService implements BaseService<TaskRequestDTO, TaskEntity> {
+public class TaskService implements BaseService<TaskRequestDTO, TaskEntity>, BadMessages {
     private final TaskRepository taskRepository;
+
     @Override
     public List<TaskEntity> list() {
+        List<TaskEntity> taskEntityList = taskRepository.findAll();
         return null;
     }
 
