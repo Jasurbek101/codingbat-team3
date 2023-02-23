@@ -28,10 +28,10 @@ public class HomeController {
             Model model,
             Principal principal
             ) {
-        String email = principal.getName();
-        System.out.println(email);
-        if (email != null) {
-            UserEntity currentUser = userService.getByName(email);
+
+        if (principal != null) {
+            String username = principal.getName();
+            UserEntity currentUser = userService.getByName(username);
             model.addAttribute("user",currentUser);
         }
         List<SubjectEntity> subjectEntityList = subjectService.list();

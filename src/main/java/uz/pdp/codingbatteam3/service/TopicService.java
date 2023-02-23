@@ -2,6 +2,7 @@ package uz.pdp.codingbatteam3.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import uz.pdp.codingbatteam3.common.exception.RecordNotFoundException;
 import uz.pdp.codingbatteam3.entity.TopicEntity;
 import uz.pdp.codingbatteam3.entity.model.DTO.TopicRequestDTO;
 import uz.pdp.codingbatteam3.repository.TopicRepository;
@@ -38,6 +39,8 @@ public class TopicService implements BaseService<TopicRequestDTO, TopicEntity> {
 
     @Override
     public TopicEntity getByName(String name) {
-        return null;
+        return topicRepository.findByName(name).orElseThrow(() ->
+                new RecordNotFoundException(String.format("topic %s not found", name))
+        );
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.view.RedirectView;
 import uz.pdp.codingbatteam3.entity.model.DTO.UserRegisterDTO;
 import uz.pdp.codingbatteam3.service.UserService;
 
@@ -26,7 +27,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String register(
+    public RedirectView register(
             @ModelAttribute UserRegisterDTO userRegisterDTO,
             @RequestParam MultipartFile logo,
             Model model
@@ -35,9 +36,9 @@ public class AuthController {
             model.addAttribute("user", userService.getByName(
                     userRegisterDTO.getEmail()
             ));
-            return "home";
+            return new RedirectView("/");
         }
-        return "redirect:/auth/register";
+        return new RedirectView("/auth/register");
     }
 
     @GetMapping("/register")
