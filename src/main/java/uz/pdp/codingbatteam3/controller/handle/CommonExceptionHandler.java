@@ -1,11 +1,14 @@
 package uz.pdp.codingbatteam3.controller.handle;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import uz.pdp.codingbatteam3.common.exception.RecordNotFoundException;
-
+@Controller
+@ControllerAdvice
 public class CommonExceptionHandler {
     @ExceptionHandler(RecordNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)

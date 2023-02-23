@@ -35,6 +35,7 @@ public class UserController {
 
     @ResponseBody
     @GetMapping("/list")
+    @PreAuthorize("hasRole('SUPER_ADMIN') or hasRole('ADMIN')")
     public String list(
             Model model
     ) {
@@ -45,6 +46,7 @@ public class UserController {
 
     @ResponseBody
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('SUPER_ADMIN') or hasRole('ADMIN')")
     public String get(
             Model model,
             @PathVariable Integer id
@@ -56,6 +58,7 @@ public class UserController {
 
     @ResponseBody
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('SUPER_ADMIN') or (hasRole('ADMIN') and hasAuthority('DELETE'))")
     public String delete(
             @PathVariable Integer id
     ) {
@@ -67,6 +70,7 @@ public class UserController {
 
     @ResponseBody
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('SUPER_ADMIN') or (hasRole('ADMIN') and hasAuthority('UPDATE'))")
     public String update(
             @PathVariable Integer id,
             @ModelAttribute UserRegisterDTO userRegisterDTO,

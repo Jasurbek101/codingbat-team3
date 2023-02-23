@@ -12,7 +12,7 @@ import java.util.Collection;
 import java.util.List;
 
 import static uz.pdp.codingbatteam3.entity.model.Enum.PermissionEnum.*;
-import static uz.pdp.codingbatteam3.entity.model.Enum.RoleEnum.USER;
+import static uz.pdp.codingbatteam3.entity.model.Enum.RoleEnum.ROLE_USER;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -38,12 +38,10 @@ public class UserEntity extends BaseEntity implements UserDetails {
                     .email(userRegisterDTO.getEmail())
                     .password(userRegisterDTO.getPassword())
                     .roleEnumList(List.of(
-                            USER
+                            ROLE_USER
                     ))
                     .permissionEnumList(List.of(
-                            READ_TOPIC,
-                            READ_SUBJECT,
-                            READ_QUESTION
+                            READ
                     ))
                     .build();
         }
