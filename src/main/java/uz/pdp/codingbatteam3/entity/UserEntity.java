@@ -3,16 +3,18 @@ package uz.pdp.codingbatteam3.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import uz.pdp.codingbatteam3.entity.model.DTO.UserRegisterDTO;
 import uz.pdp.codingbatteam3.entity.model.Enum.PermissionEnum;
 import uz.pdp.codingbatteam3.entity.model.Enum.RoleEnum;
-import uz.pdp.codingbatteam3.entity.model.DTO.UserRegisterDTO;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static uz.pdp.codingbatteam3.entity.model.Enum.PermissionEnum.*;
-import static uz.pdp.codingbatteam3.entity.model.Enum.RoleEnum.ROLE_USER;
+import static uz.pdp.codingbatteam3.entity.model.Enum.PermissionEnum.READ;
+import static uz.pdp.codingbatteam3.entity.model.Enum.RoleEnum.USER;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -38,7 +40,7 @@ public class UserEntity extends BaseEntity implements UserDetails {
                     .username(userRegisterDTO.getEmail())
                     .password(userRegisterDTO.getPassword())
                     .roleEnumList(List.of(
-                            ROLE_USER
+                            USER
                     ))
                     .permissionEnumList(List.of(
                             READ
@@ -57,7 +59,10 @@ public class UserEntity extends BaseEntity implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        roleEnumList.forEach(role -> authorities.add(new SimpleGrantedAuthority("ROLE_" + role)));
+        permissionEnumList.forEach(permissionEnum -> authorities.add(new SimpleGrantedAuthority(permissionEnum.name())));
+        return authorities;
     }
 
     @Override

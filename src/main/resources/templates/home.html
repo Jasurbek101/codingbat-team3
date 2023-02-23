@@ -7,6 +7,31 @@
     <link rel=stylesheet type=text/css th:href="@{https://codingbat.com/codingbat.css}">
     <title>CodingBat Java</title></head>
 <body>
+
+<div style='float:right;  margin:0px; border: 1px solid lightgray;'>
+    <table>
+        <form method=post action=/login>
+            <tr>
+                <td>id/email</td>
+                <td><input type=text name=uname size=20></td>
+            </tr>
+            <tr>
+                <td>password</td>
+                <td><input type=password name=pw size=20></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type=submit name=dologin value='log in'></td>
+            </tr>
+            <input type=hidden name=fromurl value='/java'>
+        </form>
+        <tr>
+            <td> <a href='/pref?docreate=1'>create account</a></td>
+        </tr>
+    </table>
+</div>
+
+
 <div sec:authorize="isAuthenticated()">
     <img th:src="@{/assets/mypng.png}" width="22" height="22" alt="Camera icon" title="Camera icon">
 </div>
@@ -15,19 +40,19 @@
         <tr>
             <td valign=top style='text-align:right' colspan=1><a href=/about.html>about</a> |
                 <a href=/help.html>help</a> | <a href=/doc/code-help-videos.html>code help+videos</a> |
-                <a href=/done>done</a> | <a th:href="@{/auth/login}">login</a> |
-                <a th:href="@{/auth/register}">create account</a>
             </td>
         </tr>
     </table>
 </div>
+
+
 <a th:href="@{/}"><span style='font-size:200%;'>CodingBat</span></a> code practice
 <div class=pretab><p class=max>Welcome to Codingbat. See <a href=/help.html>help</a> for the latest.</div>
 <div class=tabc>
     <nav>
         <ul>
             <li class=h2 th:each="subjectItem : ${subjectList}"><a
-                    th:href="@{/home/{subjectTitle}(subjectTitle=${subjectItem.getTitle()})}"
+                    th:href="@{/subject/{subjectTitle}(subjectTitle=${subjectItem.getTitle()})}"
                     th:text="${subjectItem.getTitle()}"></a></li>
         </ul>
     </nav>

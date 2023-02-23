@@ -6,47 +6,67 @@ import uz.pdp.codingbatteam3.common.exception.RecordNotFoundException;
 import uz.pdp.codingbatteam3.entity.SubjectEntity;
 import uz.pdp.codingbatteam3.entity.model.DTO.SubjectRequestDTO;
 import uz.pdp.codingbatteam3.repository.SubjectRepository;
+import uz.pdp.codingbatteam3.service.badMessages.BadMessages;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class SubjectService implements BaseService<SubjectRequestDTO, SubjectEntity> {
+public class SubjectService implements BaseService<SubjectRequestDTO, SubjectEntity>, BadMessages {
     private final SubjectRepository subjectRepository;
 
     @Override
     public List<SubjectEntity> list() {
         List<SubjectEntity> subjectList = subjectRepository.findAll();
-        if (subjectList.isEmpty()) throw new NullPointerException("Empty list");
+        if (subjectList.isEmpty()) throw new NullPointerException(SUBJECT_LIST_NULL);
         return subjectList;
     }
 
     @Override
     public SubjectEntity getByName(String title) {
-        Optional<SubjectEntity> optionalSubjectEntity = subjectRepository.findByTitle(title);
-        return optionalSubjectEntity.orElseThrow(() ->
-                new RecordNotFoundException(String.format("subject %s not found", title))
-        );
+        Optional<SubjectEntity> subjectEntity = subjectRepository.findByTitle(title);
+        if (subjectEntity.isEmpty()){
+            throw new RecordNotFoundException(String.format(SUBJECT_NOT_FOUND,title));
+        }
+        return subjectEntity.get();
     }
 
     @Override
     public boolean add(SubjectRequestDTO subjectRequestDTO) {
-        return false;
+        Optional<SubjectEntity> subjectEntity = subjectRepository.findByTitle(subjectRequestDTO.getTitle());
+        if (subjectEntity.isPresent()){
+            throw new RecordNotFoundException(String.format(SUBJECT_NOT_FOUND,subjectRequestDTO.getTitle()));
+        }
+        subjectRepository.save(SubjectEntity.of(subjectRequestDTO));
+        return true;
     }
 
     @Override
     public boolean delete(Integer id) {
-        return false;
+        Optional<SubjectEntity> subjectEntity = subjectRepository.findById(id);
+        if (subjectEntity.isEmpty()){
+            throw new RecordNotFoundException(String.format(SUBJECT_NOT_FOUND,id));
+        }
+        subjectRepository.deleteById(id);
+        return true;
     }
 
     @Override
     public SubjectEntity update(Integer id, SubjectRequestDTO subjectRequestDTO) {
-        return null;
+        Optional<SubjectEntity> subjectEntity = subjectRepository.findById(id);
+        if (subjectEntity.isEmpty()){
+            throw new RecordNotFoundException(String.format(SUBJECT_NOT_FOUND,id));
+        }
+       return subjectRepository.save(SubjectEntity.of(subjectRequestDTO));
     }
 
     @Override
     public SubjectEntity get(Integer id) {
-        return null;
+        Optional<SubjectEntity> subjectEntity = subjectRepository.findById(id);
+        if (subjectEntity.isEmpty()){
+            throw new RecordNotFoundException(String.format(SUBJECT_NOT_FOUND,id));
+        }
+        return subjectEntity.get();
     }
 }

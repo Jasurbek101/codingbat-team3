@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import uz.pdp.codingbatteam3.common.exception.RecordNotFoundException;
-import uz.pdp.codingbatteam3.common.exception.UserAlreadyException;
+import uz.pdp.codingbatteam3.common.exception.RecordAlreadyExistException;
 
 @Controller
 @ControllerAdvice
@@ -16,10 +16,10 @@ public class CommonExceptionHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     String recordNotFound(Exception e, Model model) {
         model.addAttribute("message", e.getMessage());
-        return "404";
+        return "home";
     }
 
-    @ExceptionHandler(UserAlreadyException.class)
+    @ExceptionHandler(RecordAlreadyExistException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     String badRequest(Exception e, Model model) {
         model.addAttribute("User Already exists ", e.getMessage());

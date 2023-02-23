@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import uz.pdp.codingbatteam3.common.exception.RecordNotFoundException;
-import uz.pdp.codingbatteam3.common.exception.UserAlreadyException;
+import uz.pdp.codingbatteam3.common.exception.RecordAlreadyExistException;
 import uz.pdp.codingbatteam3.entity.UserEntity;
 import uz.pdp.codingbatteam3.entity.model.DTO.UserRegisterDTO;
 import uz.pdp.codingbatteam3.repository.UserRepository;
@@ -41,7 +41,7 @@ public class UserService implements BaseService<UserRegisterDTO, UserEntity> {
 
         System.out.println(userEntity.toString());
         if (userEntity.isPresent())
-            throw new UserAlreadyException(String.format("user %s already exists", userRegisterDTO.getEmail()));
+            throw new RecordAlreadyExistException(String.format("user %s already exists", userRegisterDTO.getEmail()));
 
         UserEntity savedUserEntity = UserEntity.of(userRegisterDTO);
         savedUserEntity.setPassword(
@@ -67,8 +67,7 @@ public class UserService implements BaseService<UserRegisterDTO, UserEntity> {
         Optional<UserEntity> userEntity = userRepository.findById(id);
         if (userEntity.isEmpty())
             throw new RecordNotFoundException(String.format("user %s not found", id));
-        UserEntity savedUserEntity = userRepository.save(UserEntity.of(userRegisterDTO));
-        return savedUserEntity;
+        return userRepository.save(UserEntity.of(userRegisterDTO));
     }
 
     @Override

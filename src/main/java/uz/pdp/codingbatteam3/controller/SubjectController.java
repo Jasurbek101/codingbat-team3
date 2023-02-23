@@ -14,14 +14,14 @@ import uz.pdp.codingbatteam3.service.SubjectService;
 import java.util.List;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/subject")
 @RequiredArgsConstructor
 public class SubjectController {
     private final SubjectService subjectService;
-    @ResponseBody
+
     @GetMapping("/{subjectTitle}")
     private String getSubjects(
-            @PathVariable String subjectTitle,
+            @PathVariable("subjectTitle") String subjectTitle,
             Model model
     ) {
         List<SubjectEntity> subjectList = subjectService.list();
