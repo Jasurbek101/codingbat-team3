@@ -1,40 +1,24 @@
-<!doctype html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
-    <meta charset=utf-8/>
-    <link rel=stylesheet type=text/css th:href="@{https://codingbat.com/codingbat.css}">
-
-    <title>CodingBat Java</title></head>
+    <title>Please Log In</title>
+</head>
 <body>
-<br><a href=/><span style='font-size:200%;'>CodingBat</span></a> code practice<p>
-<h2>Login Account</h2>
-<p style='max-width:800px'>Please enter information to your account. We use your email address as your id just
-    so it's memorable and for password reset, not for spamming. Your accounts automatically pick up any saved or done
-    problems of the current session. The name field is not required, but with the Teacher Share feature, it can help the
-    teacher see who is who.
-<p>
-<form name=pform th:action="@{/login}" method="post">
-    <table>
-        <tr>
-            <td width=250><label>email (used as account id)</label></td>
-            <td><input type=text size=42 name="email" value=""></td>
-        </tr>
-        <tr>
-            <td width=200><label>Password</label></td>
-            <td><input type=password size=42 name="password" value=""></td>
-            <td>
-                <button onclick='var pw=document.pform.password.type=="password"; document.pform.password.type=pw?"text":"password"; return false;'>
-                    show/hide
-                </button>
-            </td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><input type=submit name=dosavecreate value='Create Account'></td>
-        </tr>
-    </table>
+<h1>Please Log In</h1>
+<div th:if="${param.error}">
+    Invalid username and password.
+</div>
+<div th:if="${param.logout}">
+    You have been logged out.
+</div>
+<form method="post" th:action="@{/process-login}">
+    <div>
+        <input name="username" placeholder="Username" type="text"/>
+    </div>
+    <div>
+        <input name="password" placeholder="Password" type="password"/>
+    </div>
+    <input type="submit" value="Log in"/>
 </form>
-<p><a href=/privacy.html>privacy statement</a>
-</body></html>
-
+</body>
+</html>

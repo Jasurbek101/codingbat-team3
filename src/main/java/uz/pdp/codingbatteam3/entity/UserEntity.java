@@ -23,9 +23,10 @@ import static uz.pdp.codingbatteam3.entity.model.Enum.RoleEnum.ROLE_USER;
 @Table(name = "users")
 public class UserEntity extends BaseEntity implements UserDetails {
     @Column(unique = true, nullable = false)
-    private String email;
+    private String username;
     @Column(nullable = false)
     private String password;
+    private String logoUrl;
     @Enumerated(EnumType.STRING)
     private List<RoleEnum> roleEnumList;
     @Enumerated(EnumType.STRING)
@@ -35,7 +36,7 @@ public class UserEntity extends BaseEntity implements UserDetails {
         if (userRegisterDTO.isUser()) {
             return UserEntity
                     .builder()
-                    .email(userRegisterDTO.getEmail())
+                    .username(userRegisterDTO.getEmail())
                     .password(userRegisterDTO.getPassword())
                     .roleEnumList(List.of(
                             ROLE_USER
@@ -47,7 +48,7 @@ public class UserEntity extends BaseEntity implements UserDetails {
         }
         return UserEntity
                 .builder()
-                .email(userRegisterDTO.getEmail())
+                .username(userRegisterDTO.getEmail())
                 .password(userRegisterDTO.getPassword())
                 .roleEnumList(userRegisterDTO.getRoles())
                 .permissionEnumList(userRegisterDTO.getPermissions())
@@ -62,8 +63,10 @@ public class UserEntity extends BaseEntity implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        return username;
     }
+    @Override
+    public String getPassword() {return password;}
 
     @Override
     public boolean isAccountNonExpired() {
