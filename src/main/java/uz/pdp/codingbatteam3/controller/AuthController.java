@@ -36,7 +36,7 @@ public class AuthController {
     }
 
     @GetMapping("/register")
-    public String register() {
+    public String registers() {
         return "register";
     }
 }

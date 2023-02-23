@@ -16,7 +16,7 @@ public class UserRegisterDTO {
 
     @JsonIgnore
     public boolean isUser() {
-      return roles.isEmpty() && permissions.isEmpty();
+      return roles == null && permissions == null;
     }
 
 }

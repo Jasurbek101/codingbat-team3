@@ -14,26 +14,30 @@
     problems of the current session. The name field is not required, but with the Teacher Share feature, it can help the
     teacher see who is who. The password should have at least 6 characters.
 <p>
-<form name=pform th:action="@{/user/add}" method=post>
-    <table>
-        <tr>
-            <td width=250><label>Email (used as account id)</label></td>
-            <td><input type=text size=42 name="email" value=""></td>
-        </tr>
-        <tr>
-            <td width=200><label>Password</label></td>
-            <td><input type=password size=42 name="password" value=""></td>
-            <td>
-                <button onclick='var pw=document.pform.password.type=="password"; document.pform.password.type=pw?"text":"password"; return false;'>
-                    show/hide
-                </button>
-            </td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><input type=submit name=dosavecreate value='Create Account'></td>
-        </tr>
-    </table>
-</form>
+<form action=""></form>
+
+<!--<form name=pform th:action="@{/auth/register}" method="post">-->
+<!--    <table>-->
+<!--        <tr>-->
+<!--            <td width=250><label>Email (used as account id)</label></td>-->
+<!--            <td><input type=text size=42 name="email" value="" required></td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <td width=200><label>Password</label></td>-->
+<!--            <td><input type=password size=42 name="password" value="" required></td>-->
+<!--            <td>-->
+<!--                <button onclick='var pw=document.pform.password.type=="password"; document.pform.password.type=pw?"text":"password"; return false;'>-->
+<!--                    show/hide-->
+<!--                </button>-->
+<!--            </td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <td></td>-->
+<!--            <td>-->
+<!--                <button type="submit">Create Account</button>-->
+<!--            </td>-->
+<!--        </tr>-->
+<!--    </table>-->
+<!--</form>-->
 <p><a href=/privacy.html>privacy statement</a>
 </body></html>
