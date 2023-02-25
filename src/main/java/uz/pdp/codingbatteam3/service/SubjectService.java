@@ -8,8 +8,7 @@ import uz.pdp.codingbatteam3.entity.model.DTO.SubjectRequestDTO;
 import uz.pdp.codingbatteam3.repository.SubjectRepository;
 import uz.pdp.codingbatteam3.service.badMessages.BadMessages;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -30,6 +29,13 @@ public class SubjectService implements BaseService<SubjectRequestDTO, SubjectEnt
             throw new RecordNotFoundException(String.format(SUBJECT_NOT_FOUND,title));
         }
         return subjectEntity.get();
+    }
+
+    public Map<String, List<?>> getSubjectTopicListAttributes(){
+        Map<String, List<?>> listMap = new HashMap<>();
+        listMap.put("subjectList",list());
+        listMap.put("topicList", getByName("Java").getTopicEntities());
+        return listMap;
     }
 
     @Override

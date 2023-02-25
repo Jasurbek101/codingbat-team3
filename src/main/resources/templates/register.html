@@ -8,9 +8,10 @@
 <h1>
     REGISTER
 </h1>>
-<form th:action="@{/auth/register}" th:method="post" th:object="${user}">
+<form th:action="@{/auth/register}" th:method="post" th:object="${user}" enctype="multipart/form-data">
     <input type="text" placeholder="username" id="email" th:field="*{email}" name="email">
     <input type="password" placeholder="password" id="password" th:field="*{password}" name="password">
+    <input type="file" placeholder="logo" th:field="*{file}" name="file"  multiple="multiple">
     <button type="submit" name="Submit" value="Register">Register</button>
 </form>
 </body>

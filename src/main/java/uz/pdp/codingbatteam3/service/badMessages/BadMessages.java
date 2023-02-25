@@ -1,7 +1,6 @@
 package uz.pdp.codingbatteam3.service.badMessages;
 
 public interface BadMessages {
-
     String TOPIC_NOT_FOUND =  "Topic %s not found";
     String TOPIC_ALREADY_EXISTS = "Topic %s already exists";
     String TOPIC_LIST_NULL = "Topic entity list is null";

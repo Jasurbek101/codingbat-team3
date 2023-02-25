@@ -290,7 +290,7 @@ $(document).ready(function(){
 				<tbody th:each="user: ${users}">
 					<tr>
 						<td th:text="${user.username}" width="auto"></td>
-						<td th:text="${user.password}" width="300"></td>
+						<td th:text="${user.password}" width="auto"></td>
 						<td th:each="role:${user.getRoleEnumList()}">
 							<p th:text="${role.name}"></p>
 						</td>

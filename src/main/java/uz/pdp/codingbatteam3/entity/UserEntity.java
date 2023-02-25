@@ -28,6 +28,7 @@ public class UserEntity extends BaseEntity implements UserDetails {
     private String username;
     @Column(nullable = false)
     private String password;
+    private String logoUrl;
     @Enumerated(EnumType.STRING)
     private List<RoleEnum> roleEnumList;
     @Enumerated(EnumType.STRING)

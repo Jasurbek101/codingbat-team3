@@ -8,38 +8,31 @@
     <title>CodingBat Java</title></head>
 <body>
 
-<div style='float:right;  margin:0px; border: 1px solid lightgray;'>
+<div sec:authorize="isAuthenticated() == false" style='float:right;  margin:0px; border: 1px solid lightgray;'>
     <table>
-        <form method=post action=/login>
-            <tr>
-                <td>id/email</td>
-                <td><input type=text name=uname size=20></td>
-            </tr>
-            <tr>
-                <td>password</td>
-                <td><input type=password name=pw size=20></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td><input type=submit name=dologin value='log in'></td>
-            </tr>
-            <input type=hidden name=fromurl value='/java'>
-        </form>
         <tr>
-            <td> <a href='/pref?docreate=1'>create account</a></td>
+            <td><a href="/auth/login">log in</a></td>
+        </tr>
+        <tr>
+            <td><a href='/auth/register'>create account</a></td>
         </tr>
     </table>
 </div>
 
 
-<div sec:authorize="isAuthenticated()">
-    <img th:src="@{/assets/mypng.png}" width="22" height="22" alt="Camera icon" title="Camera icon">
-</div>
-<div style='float:right'>
+<div sec:authorize="isAuthenticated()" style='float:right;  margin:3px; border: 1px solid lightgray;'>
     <table>
         <tr>
-            <td valign=top style='text-align:right' colspan=1><a href=/about.html>about</a> |
-                <a href=/help.html>help</a> | <a href=/doc/code-help-videos.html>code help+videos</a> |
+            <td>
+                <img th:src="${logo}" width="22" height="22">
+            </td>
+        </tr>
+        <tr>
+            <td><p th:text="${username}"></p></td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/logout">logout</a>
             </td>
         </tr>
     </table>
