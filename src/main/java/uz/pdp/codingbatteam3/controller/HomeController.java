@@ -22,12 +22,14 @@ public class HomeController {
             Model model,
             @AuthenticationPrincipal UserEntity user
     ) {
-        model.addAllAttributes(subjectService.getSubjectTopicListAttributes());
+//        model.addAttribute("subjectList",subjectService.list());
+//        model.addAttribute("topicList",subjectService.getTopicList());
+        model.addAllAttributes(subjectService.getSubjectAndTopicListAttributes());
         model.addAttribute("username", user != null ? user.getUsername() : "");
         model.addAttribute("logo", user != null ? user.getLogoUrl() : "");
         if (user != null && userService.isSuperAdmin(user)) {
             model.addAllAttributes(userService.getRolePermissionsAttributes(user));
-            return "adminPage";
+            return "adminUser";
         }
         return "home";
     }

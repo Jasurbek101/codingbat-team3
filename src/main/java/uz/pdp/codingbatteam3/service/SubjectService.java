@@ -4,11 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import uz.pdp.codingbatteam3.common.exception.RecordNotFoundException;
 import uz.pdp.codingbatteam3.entity.SubjectEntity;
+import uz.pdp.codingbatteam3.entity.TopicEntity;
 import uz.pdp.codingbatteam3.entity.model.DTO.SubjectRequestDTO;
 import uz.pdp.codingbatteam3.repository.SubjectRepository;
 import uz.pdp.codingbatteam3.service.badMessages.BadMessages;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 @RequiredArgsConstructor
@@ -31,10 +33,15 @@ public class SubjectService implements BaseService<SubjectRequestDTO, SubjectEnt
         return subjectEntity.get();
     }
 
-    public Map<String, List<?>> getSubjectTopicListAttributes(){
-        Map<String, List<?>> listMap = new HashMap<>();
-        listMap.put("subjectList",list());
-        listMap.put("topicList", getByName("Java").getTopicEntities());
+    public List<TopicEntity> getTopicList(){
+        List<TopicEntity> topicList = getByName("JAVA").getTopicEntities();
+        return topicList;
+    }
+
+    public Map<String, List> getSubjectAndTopicListAttributes(){
+        Map<String , List> listMap = new ConcurrentHashMap<>();
+        listMap.put("topicList", getTopicList());
+        listMap.put("subjectList", list());
         return listMap;
     }
 

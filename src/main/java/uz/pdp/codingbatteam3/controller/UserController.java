@@ -17,7 +17,6 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
-
     @PostMapping("/add")
     @PreAuthorize("hasRole('SUPER_ADMIN')")
     public String addUser(
@@ -55,7 +54,7 @@ public class UserController {
     }
 
 
-    @DeleteMapping("/{id}")
+    @PostMapping("/delete/{id}")
     @PreAuthorize("hasRole('SUPER_ADMIN') or (hasRole('ADMIN') and hasAuthority('DELETE'))")
     public String delete(
             @PathVariable Integer id
@@ -67,7 +66,7 @@ public class UserController {
     }
 
 
-    @PutMapping("/{id}")
+    @PostMapping("/update/{id}")
     @PreAuthorize("hasRole('SUPER_ADMIN') or (hasRole('ADMIN') and hasAuthority('UPDATE'))")
     public String update(
             @PathVariable Integer id,

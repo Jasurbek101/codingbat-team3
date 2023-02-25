@@ -24,10 +24,10 @@ public class SubjectController {
             @PathVariable("subjectTitle") String subjectTitle,
             Model model
     ) {
-        List<SubjectEntity> subjectList = subjectService.list();
-        List<TopicEntity> topicList = subjectService.getByName(subjectTitle).getTopicEntities();
-        model.addAttribute("subjectList", subjectList);
-        model.addAttribute("topicList", topicList);
+//        List<SubjectEntity> subjectList = subjectService.list();
+//        List<TopicEntity> topicList = subjectService.getByName(subjectTitle).getTopicEntities();
+//        model.addAttribute("subjectList", subjectList);
+//        model.addAttribute("topicList", topicList);
         return "home";
     }
 

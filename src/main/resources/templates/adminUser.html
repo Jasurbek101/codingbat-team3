@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -277,20 +278,19 @@ $(document).ready(function(){
 					</div>
 				</div>
 			</div>
-			<table class="table table-striped table-hover">
+			<table th:if="${add == false}" class="table table-striped table-hover">
 				<thead>
 					<tr>
 						<th>Username</th>
 						<th>Password</th>
 						<th>Roles</th>
 						<th>Permissions</th>
-
 					</tr>
 				</thead>
 				<tbody th:each="user: ${users}">
 					<tr>
-						<td th:text="${user.username}" width="auto"></td>
-						<td th:text="${user.password}" width="auto"></td>
+						<td th:text="${user.username}" ></td>
+						<td th:text="${user.password}" ></td>
 						<td th:each="role:${user.getRoleEnumList()}">
 							<p th:text="${role.name}"></p>
 						</td>
@@ -298,8 +298,8 @@ $(document).ready(function(){
 							<p th:text="${permission.name()}"></p>
 						</td>
 						<td>
-<!--							<a th:href="@{subject/edit/{title}(title=${subject.getTitle()})}"><i class="material-icons"  title="Edit">&#xE254;</i></a>-->
-<!--							<a th:href="@{subject/delete/{title}(title=${subject.getTitle()})}" class="delete" ><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>-->
+							<a th:href="@{user/{id}(id=${user.id})}"><i class="material-icons"  title="Edit">&#xE254;</i></a>
+							<a th:href="@{user/delete/{id}(id=${user.id})}" class="delete" ><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
 						</td>
 					</tr>
 

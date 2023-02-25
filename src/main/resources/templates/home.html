@@ -44,7 +44,7 @@
 <div class=tabc>
     <nav>
         <ul>
-            <li class=h2 th:each="subjectItem : ${subjectList}"><a
+            <li class=h2 th:each="subjectItem : ${subjec0tList}"><a
                     th:href="@{/subject/{subjectTitle}(subjectTitle=${subjectItem.getTitle()})}"
                     th:text="${subjectItem.getTitle()}"></a></li>
         </ul>
