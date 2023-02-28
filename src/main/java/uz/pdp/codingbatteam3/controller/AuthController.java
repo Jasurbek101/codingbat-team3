@@ -1,11 +1,19 @@
 package uz.pdp.codingbatteam3.controller;
 
+import jakarta.servlet.ServletInputStream;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.view.RedirectView;
 import uz.pdp.codingbatteam3.entity.model.DTO.UserRegisterDTO;
 import uz.pdp.codingbatteam3.service.UserService;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 
 @Controller
 @RequestMapping("/auth")
@@ -19,22 +27,22 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String register(
+    public RedirectView register(
             @ModelAttribute UserRegisterDTO userRegisterDTO,
+            @RequestParam MultipartFile logo,
             Model model
-    ) {
-        if (userService.add(userRegisterDTO)) {
+            ) {
+        if (userService.add(userRegisterDTO,logo)) {
             model.addAttribute("user", userService.getByName(
                     userRegisterDTO.getEmail()
             ));
-            return "home";
+            return new RedirectView("/");
         }
-        return "redirect:/auth/register";
+        return new RedirectView("/auth/register");
     }
 
     @GetMapping("/register")
-    public String register(Model model) {
-        model.addAttribute("user",new UserRegisterDTO());
+    public String register() {
         return "register";
     }
 }

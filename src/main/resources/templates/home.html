@@ -1,7 +1,6 @@
 <!doctype html>
-<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset=utf-8/>
     <link rel=stylesheet type=text/css th:href="@{https://codingbat.com/codingbat.css}">
@@ -37,15 +36,13 @@
         </tr>
     </table>
 </div>
-
-
 <a th:href="@{/}"><span style='font-size:200%;'>CodingBat</span></a> code practice
-<div class=pretab><p class=max>Welcome to Codingbat. See <a href=/help.html>help</a> for the latest.</div>
+<div class=pretab><p class=max>Welcome to Codingbat.</div>
 <div class=tabc>
     <nav>
         <ul>
-            <li class=h2 th:each="subjectItem : ${subjec0tList}"><a
-                    th:href="@{/subject/{subjectTitle}(subjectTitle=${subjectItem.getTitle()})}"
+            <li class=h2 th:each="subjectItem : ${subjectList}"><a
+                    th:href="@{/{subjectTitle}(subjectTitle=${subjectItem.getTitle()})}"
                     th:text="${subjectItem.getTitle()}"></a></li>
         </ul>
     </nav>

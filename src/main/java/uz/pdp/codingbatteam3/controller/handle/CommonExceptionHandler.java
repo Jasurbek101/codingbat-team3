@@ -1,5 +1,6 @@
 package uz.pdp.codingbatteam3.controller.handle;
 
+import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,4 +33,10 @@ public class CommonExceptionHandler {
         return "home";
     }
 
+    @ExceptionHandler(FileUploadException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    String fileUpload(Exception e, Model model) {
+        model.addAttribute("message", e.getMessage());
+        return "404";
+    }
 }

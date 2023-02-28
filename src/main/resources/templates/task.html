@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset=utf-8/>
+
+    <link rel=stylesheet type=text/css th:href="@{https://codingbat.com/codingbat.css}">
+
+</head>
+<body>
+
+<div style='float:right'>
+    <table>
+        <tr>
+            <td valign=top style='text-align:right' colspan=1>
+                <a href="#">done</a> |
+                <a th:href="@{/auth/login}">login</a> |
+                <a th:href="@{/auth/register}">create account</a>
+            </td>
+        </tr>
+    </table>
+</div>
+<a th:href="@{/}"><span style='font-size:200%;'>CodingBat</span></a> code practice
+<div class=pretab><p class=max>Welcome to Codingbat.</div>
+<div class=tabc>
+    <nav>
+        <ul>
+            <li class=h2 th:each="subjectItem : ${subjectList}"><a
+                    th:href="@{/{subjectTitle}(subjectTitle=${subjectItem.getTitle()})}"
+                    th:text="${subjectItem.getTitle()}"></a></li>
+        </ul>
+    </nav>
+    <div class=tabin>
+        <div class=indent>
+            <span class=h2 th:text="${topic.getName()}"></span>
+            <p style='max-width:800px' th:text="${topic.getDescription()}">
+            <table>
+                <tr>
+                    <td width=200 th:each="taskItem : ${taskList}">
+                        &nbsp;
+                        <img th:src="@{https://codingbat.com/c1.jpg}">
+                        <a th:href="
+                            @{/{subjectName}/{topicName}/{taskName}
+                            (subjectName=${taskItem.getTopicEntity().getSubjectEntity().getTitle()}
+                            ,topicName=${taskItem.getTopicEntity().getName()}
+                            ,taskName=${taskItem.getName()})}" th:text="${taskItem.getName()}"></a>&nbsp;
+                        <font color=gray>H</font>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
