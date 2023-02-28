@@ -32,7 +32,7 @@ public class AuthController {
             @RequestParam MultipartFile logo,
             Model model
             ) {
-        if (userService.add(userRegisterDTO,logo)) {
+        if (userService.add(userRegisterDTO)) {
             model.addAttribute("user", userService.getByName(
                     userRegisterDTO.getEmail()
             ));

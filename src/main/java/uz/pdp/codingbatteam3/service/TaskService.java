@@ -2,6 +2,7 @@ package uz.pdp.codingbatteam3.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import uz.pdp.codingbatteam3.common.exception.RecordAlreadyExistException;
 import uz.pdp.codingbatteam3.common.exception.RecordNotFoundException;
 import uz.pdp.codingbatteam3.entity.TaskEntity;
 import uz.pdp.codingbatteam3.entity.UserEntity;
@@ -20,7 +21,7 @@ public class TaskService implements BaseService<TaskRequestDTO, TaskEntity> {
     public List<TaskEntity> list() {
         List<TaskEntity> taskEntityList = taskRepository.findAll();
         if (taskEntityList.isEmpty()){
-            throw new NullPointerException(String.format(TOPIC_LIST_NULL));
+            throw new NullPointerException(String.format(BadMessages.TOPIC_LIST_NULL));
         }
         return taskEntityList;
     }
@@ -29,7 +30,7 @@ public class TaskService implements BaseService<TaskRequestDTO, TaskEntity> {
     public boolean add(TaskRequestDTO taskRequestDTO) {
         Optional<TaskEntity> taskEntity = taskRepository.findByName(taskRequestDTO.getName());
         if (taskEntity.isPresent()){
-            throw new RecordAlreadyExistException(String.format(TASK_ALREADY_EXIST,taskRequestDTO.getName()));
+            throw new RecordAlreadyExistException(String.format(BadMessages.TASK_ALREADY_EXIST,taskRequestDTO.getName()));
         }
         taskRepository.save(TaskEntity.of(taskRequestDTO));
         return true;
@@ -39,7 +40,7 @@ public class TaskService implements BaseService<TaskRequestDTO, TaskEntity> {
     public boolean delete(Integer id) {
         Optional<TaskEntity> taskEntity = taskRepository.findById(id);
         if (taskEntity.isEmpty()){
-            throw new RecordNotFoundException(String.format(TASK_NOT_FOUND,id));
+            throw new RecordNotFoundException(String.format(BadMessages.TASK_NOT_FOUND,id));
         }
         taskRepository.deleteById(id);
         return true;
@@ -49,7 +50,7 @@ public class TaskService implements BaseService<TaskRequestDTO, TaskEntity> {
     public TaskEntity update(Integer id, TaskRequestDTO taskRequestDTO) {
         Optional<TaskEntity> taskEntity = taskRepository.findById(id);
         if (taskEntity.isEmpty()){
-            throw new RecordNotFoundException(String.format(TASK_NOT_FOUND,id));
+            throw new RecordNotFoundException(String.format(BadMessages.TASK_NOT_FOUND,id));
         }
         return taskRepository.save(TaskEntity.of(taskRequestDTO));
     }
@@ -58,7 +59,7 @@ public class TaskService implements BaseService<TaskRequestDTO, TaskEntity> {
     public TaskEntity get(Integer id) {
         Optional<TaskEntity> taskEntity = taskRepository.findById(id);
         if (taskEntity.isEmpty()){
-            throw new RecordNotFoundException(String.format(TASK_NOT_FOUND,id));
+            throw new RecordNotFoundException(String.format(BadMessages.TASK_NOT_FOUND,id));
         }
         return taskEntity.get();
     }
@@ -67,7 +68,7 @@ public class TaskService implements BaseService<TaskRequestDTO, TaskEntity> {
     public TaskEntity getByName(String name) {
         Optional<TaskEntity> taskEntity = taskRepository.findByName(name);
         if (taskEntity.isEmpty()){
-            throw new RecordNotFoundException(String.format(TASK_NOT_FOUND,name));
+            throw new RecordNotFoundException(String.format(BadMessages.TASK_NOT_FOUND,name));
         }
         return taskEntity.get();
     }
