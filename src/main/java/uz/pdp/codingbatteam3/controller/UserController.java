@@ -17,7 +17,6 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
-    @ResponseBody
     @PostMapping("/add")
     @PreAuthorize("hasRole('SUPER_ADMIN')")
     public String addUser(
@@ -28,12 +27,11 @@ public class UserController {
         model.addAttribute("user", userService.getByName(
                 userRegisterDTO.getEmail()
         ));
-
         //before check isSuccess and logic for return
         return "";
     }
 
-    @ResponseBody
+
     @GetMapping("/list")
     @PreAuthorize("hasRole('SUPER_ADMIN') or hasRole('ADMIN')")
     public String list(
@@ -44,7 +42,6 @@ public class UserController {
         return "redirect:/";
     }
 
-    @ResponseBody
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('SUPER_ADMIN') or hasRole('ADMIN')")
     public String get(
@@ -56,8 +53,8 @@ public class UserController {
         return "";
     }
 
-    @ResponseBody
-    @DeleteMapping("/{id}")
+
+    @PostMapping("/delete/{id}")
     @PreAuthorize("hasRole('SUPER_ADMIN') or (hasRole('ADMIN') and hasAuthority('DELETE'))")
     public String delete(
             @PathVariable Integer id
@@ -68,8 +65,8 @@ public class UserController {
         return "";
     }
 
-    @ResponseBody
-    @PutMapping("/{id}")
+
+    @PostMapping("/update/{id}")
     @PreAuthorize("hasRole('SUPER_ADMIN') or (hasRole('ADMIN') and hasAuthority('UPDATE'))")
     public String update(
             @PathVariable Integer id,

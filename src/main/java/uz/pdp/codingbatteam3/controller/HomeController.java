@@ -6,33 +6,32 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import uz.pdp.codingbatteam3.entity.SubjectEntity;
-import uz.pdp.codingbatteam3.entity.TopicEntity;
 import uz.pdp.codingbatteam3.entity.UserEntity;
 import uz.pdp.codingbatteam3.service.SubjectService;
-
-import java.util.List;
+import uz.pdp.codingbatteam3.service.UserService;
 
 @Controller
 @RequestMapping("/")
 @RequiredArgsConstructor
 public class HomeController {
     private final SubjectService subjectService;
-    private final String java = "Java";
+    private final UserService userService;
 
-    @GetMapping
-    @ResponseBody
+    @GetMapping("")
     public String home(
             Model model,
-            @AuthenticationPrincipal UserEntity userEntity
+            @AuthenticationPrincipal UserEntity user
     ) {
-        List<SubjectEntity> subjectList = subjectService.list();
-        List<TopicEntity> javaTopicList = subjectService.getByName(java).getTopicEntities();
-        model.addAttribute("subjectList", subjectList);
-        model.addAttribute("topicList", javaTopicList);
-        model.addAttribute("user",userEntity);
+//        model.addAttribute("subjectList",subjectService.list());
+//        model.addAttribute("topicList",subjectService.getTopicList());
+        model.addAllAttributes(subjectService.getSubjectAndTopicListAttributes());
+        model.addAttribute("username", user != null ? user.getUsername() : "");
+        model.addAttribute("logo", user != null ? user.getLogoUrl() : "");
+        if (user != null && userService.isSuperAdmin(user)) {
+            model.addAllAttributes(userService.getRolePermissionsAttributes(user));
+            return "adminUser";
+        }
         return "home";
     }
-
 }
+

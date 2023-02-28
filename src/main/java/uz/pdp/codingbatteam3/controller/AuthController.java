@@ -15,11 +15,10 @@ public class AuthController {
 
     @GetMapping("/login")
     public String login() {
-        return "login";
+        return "logins";
     }
 
     @PostMapping("/register")
-    @ResponseBody
     public String register(
             @ModelAttribute UserRegisterDTO userRegisterDTO,
             Model model
@@ -34,7 +33,8 @@ public class AuthController {
     }
 
     @GetMapping("/register")
-    public String register() {
+    public String register(Model model) {
+        model.addAttribute("user",new UserRegisterDTO());
         return "register";
     }
 }

@@ -7,19 +7,20 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import uz.pdp.codingbatteam3.entity.UserEntity;
 import uz.pdp.codingbatteam3.repository.UserRepository;
+import uz.pdp.codingbatteam3.service.badMessages.BadMessages;
 
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class AuthService implements UserDetailsService {
+public class AuthService implements UserDetailsService , BadMessages {
     private final UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Optional<UserEntity> optionalUserEntity = userRepository.findByEmail(email);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<UserEntity> optionalUserEntity = userRepository.findByUsername(username);
         return optionalUserEntity.orElseThrow(() ->
-                new UsernameNotFoundException(String.format("email %s not found", email))
+                new UsernameNotFoundException(String.format(USER_ALREADY_EXISTS, username))
         );
     }
 }

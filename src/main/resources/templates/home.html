@@ -1,29 +1,51 @@
 <!doctype html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset=utf-8/>
     <link rel=stylesheet type=text/css th:href="@{https://codingbat.com/codingbat.css}">
     <title>CodingBat Java</title></head>
 <body>
-<div style='float:right'>
+
+<div sec:authorize="isAuthenticated() == false" style='float:right;  margin:0px; border: 1px solid lightgray;'>
     <table>
         <tr>
-            <td valign=top style='text-align:right' colspan=1><a href=/about.html>about</a> |
-                <a href=/help.html>help</a> | <a href=/doc/code-help-videos.html>code help+videos</a> |
-                <a href=/done>done</a> | <a th:href="@{/auth/login}">login</a> |
-                <a th:href="@{/auth/register}">create account</a>
+            <td><a href="/auth/login">log in</a></td>
+        </tr>
+        <tr>
+            <td><a href='/auth/register'>create account</a></td>
+        </tr>
+    </table>
+</div>
+
+
+<div sec:authorize="isAuthenticated()" style='float:right;  margin:3px; border: 1px solid lightgray;'>
+    <table>
+        <tr>
+            <td>
+                <img th:src="${logo}" width="22" height="22">
+            </td>
+        </tr>
+        <tr>
+            <td><p th:text="${username}"></p></td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/logout">logout</a>
             </td>
         </tr>
     </table>
 </div>
+
+
 <a th:href="@{/}"><span style='font-size:200%;'>CodingBat</span></a> code practice
 <div class=pretab><p class=max>Welcome to Codingbat. See <a href=/help.html>help</a> for the latest.</div>
 <div class=tabc>
     <nav>
         <ul>
-            <li class=h2 th:each="subjectItem : ${subjectList}"><a
-                    th:href="@{/home/{subjectTitle}(subjectTitle=${subjectItem.getTitle()})}"
+            <li class=h2 th:each="subjectItem : ${subjec0tList}"><a
+                    th:href="@{/subject/{subjectTitle}(subjectTitle=${subjectItem.getTitle()})}"
                     th:text="${subjectItem.getTitle()}"></a></li>
         </ul>
     </nav>

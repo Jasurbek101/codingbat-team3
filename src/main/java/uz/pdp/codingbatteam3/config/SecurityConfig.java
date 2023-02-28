@@ -23,12 +23,6 @@ import uz.pdp.codingbatteam3.service.AuthService;
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final AuthService authService;
-    private static final String[] WHITE_LIST = new String[]{
-//            "/login",
-//            "/register",
-//            "/auth/sign_in",
-//            "/api/user/add"
-    };
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -38,18 +32,16 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
+                .csrf()
+                .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/").permitAll()
-                .requestMatchers(HttpMethod.GET, "/auth/login").permitAll()
-                .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
-                .requestMatchers(HttpMethod.POST, "/user/add").permitAll()
+                .requestMatchers(HttpMethod.GET, "/","/auth/login", "/auth/register","/subject/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/user/add", "/auth/register","/subject/**").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
-                .formLogin()
-                .loginPage("/auth/login")
-                .defaultSuccessUrl("/", true).permitAll()
+                .formLogin().loginPage("/auth/login").failureUrl("/auth/login?error=true")
+                .defaultSuccessUrl("/", true)
                 .and()
                 .logout()
                 .logoutUrl("/logout")

@@ -26,7 +26,8 @@ public class TopicEntity extends BaseEntity {
     )
     private List<TaskEntity> taskEntities;
 
-    public TopicEntity of(TopicRequestDTO topicRequestDTO) {
+
+    public static TopicEntity of(TopicRequestDTO topicRequestDTO) {
         return TopicEntity.builder()
                 .name(topicRequestDTO.getName())
                 .taskEntities(topicRequestDTO.getTaskEntities())

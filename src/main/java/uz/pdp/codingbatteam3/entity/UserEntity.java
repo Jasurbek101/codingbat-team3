@@ -3,16 +3,18 @@ package uz.pdp.codingbatteam3.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import uz.pdp.codingbatteam3.entity.model.DTO.UserRegisterDTO;
 import uz.pdp.codingbatteam3.entity.model.Enum.PermissionEnum;
 import uz.pdp.codingbatteam3.entity.model.Enum.RoleEnum;
-import uz.pdp.codingbatteam3.entity.model.DTO.UserRegisterDTO;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static uz.pdp.codingbatteam3.entity.model.Enum.PermissionEnum.*;
-import static uz.pdp.codingbatteam3.entity.model.Enum.RoleEnum.ROLE_USER;
+import static uz.pdp.codingbatteam3.entity.model.Enum.PermissionEnum.READ;
+import static uz.pdp.codingbatteam3.entity.model.Enum.RoleEnum.USER;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,9 +25,10 @@ import static uz.pdp.codingbatteam3.entity.model.Enum.RoleEnum.ROLE_USER;
 @Table(name = "users")
 public class UserEntity extends BaseEntity implements UserDetails {
     @Column(unique = true, nullable = false)
-    private String email;
+    private String username;
     @Column(nullable = false)
     private String password;
+    private String logoUrl;
     @Enumerated(EnumType.STRING)
     private List<RoleEnum> roleEnumList;
     @Enumerated(EnumType.STRING)
@@ -35,10 +38,10 @@ public class UserEntity extends BaseEntity implements UserDetails {
         if (userRegisterDTO.isUser()) {
             return UserEntity
                     .builder()
-                    .email(userRegisterDTO.getEmail())
+                    .username(userRegisterDTO.getEmail())
                     .password(userRegisterDTO.getPassword())
                     .roleEnumList(List.of(
-                            ROLE_USER
+                            USER
                     ))
                     .permissionEnumList(List.of(
                             READ
@@ -47,7 +50,7 @@ public class UserEntity extends BaseEntity implements UserDetails {
         }
         return UserEntity
                 .builder()
-                .email(userRegisterDTO.getEmail())
+                .username(userRegisterDTO.getEmail())
                 .password(userRegisterDTO.getPassword())
                 .roleEnumList(userRegisterDTO.getRoles())
                 .permissionEnumList(userRegisterDTO.getPermissions())
@@ -57,14 +60,21 @@ public class UserEntity extends BaseEntity implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        roleEnumList.forEach(role -> authorities.add(new SimpleGrantedAuthority("ROLE_" + role)));
+        permissionEnumList.forEach(permissionEnum -> authorities.add(new SimpleGrantedAuthority(permissionEnum.name())));
+        return authorities;
     }
 
     @Override
     public String getUsername() {
-        return email;
+        return username;
     }
 
+    @Override
+    public String getPassword(){
+        return password;
+    }
     @Override
     public boolean isAccountNonExpired() {
         return true;
