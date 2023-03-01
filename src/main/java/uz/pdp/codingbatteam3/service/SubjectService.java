@@ -34,7 +34,7 @@ public class SubjectService implements BaseService<SubjectRequestDTO, SubjectEnt
     }
 
     public List<TopicEntity> getTopicList(){
-        List<TopicEntity> topicList = getByName("JAVA").getTopicEntities();
+        List<TopicEntity> topicList = getByName("Java").getTopicEntities();
         return topicList;
     }
 

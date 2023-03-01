@@ -19,6 +19,7 @@ import static uz.pdp.codingbatteam3.entity.model.Enum.RoleEnum.USER;
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
+@ToString(callSuper = true)
 @Getter
 @Entity
 @Builder

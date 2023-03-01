@@ -22,15 +22,22 @@ public class HomeController {
             Model model,
             @AuthenticationPrincipal UserEntity user
     ) {
-//        model.addAttribute("subjectList",subjectService.list());
-//        model.addAttribute("topicList",subjectService.getTopicList());
         model.addAllAttributes(subjectService.getSubjectAndTopicListAttributes());
-        model.addAttribute("username", user != null ? user.getUsername() : "");
-        model.addAttribute("logo", user != null ? user.getLogoUrl() : "");
-        if (user != null && userService.isSuperAdmin(user)) {
+        model.addAllAttributes(userService.getUsernameLogoUrlAttributes(user));
+        if (user != null && userService.isAnyAdmin(user)) {
             model.addAllAttributes(userService.getRolePermissionsAttributes(user));
+            model.addAttribute("show",false);
             return "adminUser";
         }
+        return "home";
+    }
+
+    @GetMapping("home")
+    public String getHome( Model model,
+                           @AuthenticationPrincipal UserEntity user){
+        model.addAllAttributes(subjectService.getSubjectAndTopicListAttributes());
+        model.addAllAttributes(userService.getUsernameLogoUrlAttributes(user));
+        model.addAttribute("ADMIN", user != null && userService.isAnyAdmin(user));
         return "home";
     }
 }

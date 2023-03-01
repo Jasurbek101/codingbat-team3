@@ -18,7 +18,9 @@
         </tr>
     </table>
 </div>
-
+<div th:if="${ADMIN}" style='float:right;  margin:3px; border: 1px solid lightgray;'>
+    <a href="/">ADMIN</a>
+</div>
 
 <div sec:authorize="isAuthenticated()" style='float:right;  margin:3px; border: 1px solid lightgray;'>
     <table>
@@ -44,7 +46,7 @@
 <div class=tabc>
     <nav>
         <ul>
-            <li class=h2 th:each="subjectItem : ${subjec0tList}"><a
+            <li class=h2 th:each="subjectItem : ${subjectList}"><a
                     th:href="@{/subject/{subjectTitle}(subjectTitle=${subjectItem.getTitle()})}"
                     th:text="${subjectItem.getTitle()}"></a></li>
         </ul>

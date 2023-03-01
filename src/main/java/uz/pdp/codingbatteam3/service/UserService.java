@@ -15,8 +15,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+
+import static uz.pdp.codingbatteam3.entity.model.Enum.RoleEnum.SUPER_ADMIN;
 
 @Service
+@SuppressWarnings("deprecation")
 @RequiredArgsConstructor
 public class UserService implements BaseService<UserRegisterDTO, UserEntity> {
     private final FileUtil fileUtil;
@@ -31,17 +35,25 @@ public class UserService implements BaseService<UserRegisterDTO, UserEntity> {
         );
     }
 
-    public Map<String, List<?>> getRolePermissionsAttributes(UserEntity user){
+    public Map<String, List<?>> getRolePermissionsAttributes(UserEntity user) {
         Map<String, List<?>> listMap = new HashMap<>();
-        listMap.put("roles",user.getRoleEnumList());
-        listMap.put("permissions",user.getPermissionEnumList());
-        listMap.put("users",list());
+        listMap.put("roles", user.getRoleEnumList());
+        listMap.put("permissions", user.getPermissionEnumList());
+        listMap.put("users", list());
         return listMap;
     }
 
-    public boolean isSuperAdmin(UserEntity user){
+    public Map<String, String> getUsernameLogoUrlAttributes(UserEntity user){
+        Map<String , String > listMap = new HashMap<>();
+        listMap.put("username",user != null ?user.getUsername() : "");
+        listMap.put("logo",user != null ?user.getLogoUrl() : "");
+        return listMap;
+    }
+
+    public boolean isAnyAdmin(UserEntity user) {
         return user != null && user.getRoleEnumList().stream().anyMatch(roleEnum -> {
-            if (roleEnum.name().equals("SUPER_ADMIN")) {
+            if (roleEnum.name().equals("SUPER_ADMIN") ||
+                roleEnum.name().equals("ADMIN")){
                 return true;
             }
             return false;
@@ -61,7 +73,6 @@ public class UserService implements BaseService<UserRegisterDTO, UserEntity> {
         Optional<UserEntity> userEntity =
                 userRepository.findByUsername(userRegisterDTO.getEmail());
 
-        System.out.println(userEntity.toString());
         if (userEntity.isPresent())
             throw new RecordAlreadyExistException(String.format("user %s already exists", userRegisterDTO.getEmail()));
 
@@ -91,6 +102,38 @@ public class UserService implements BaseService<UserRegisterDTO, UserEntity> {
         if (userEntity.isEmpty())
             throw new RecordNotFoundException(String.format("user %s not found", id));
         return userRepository.save(UserEntity.of(userRegisterDTO));
+    }
+
+    @SneakyThrows
+    public void updateAdmin(Integer id, UserRegisterDTO userRegisterDTO) {
+        Optional<UserEntity> userEntity = userRepository.findById(id);
+        if (userEntity.isEmpty())
+            throw new RecordNotFoundException(String.format("user %s not found", id));
+       UserEntity foundUser = userRegisterDTOCastToUserEntity(userRegisterDTO);
+        foundUser = fileUtil.saveLogo(foundUser, userRegisterDTO.getFile());
+
+        userRepository.save(foundUser);
+    }
+
+    private UserEntity userRegisterDTOCastToUserEntity(UserRegisterDTO user) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(user.getId());
+        userEntity.setPassword(passwordEncoder.encode(user.getPassword()));
+        userEntity.setUsername(user.getEmail());
+        userEntity.setRoleEnumList(user.getRoles());
+        userEntity.setPermissionEnumList(user.getPermissions());
+        return userEntity;
+    }
+
+
+    public UserRegisterDTO userRegisterDTOBuilder(UserEntity user){
+        UserRegisterDTO userRegisterDTO = new UserRegisterDTO();
+        userRegisterDTO.setPermissions(user.getPermissionEnumList());
+        userRegisterDTO.setRoles(user.getRoleEnumList());
+        userRegisterDTO.setEmail(user.getUsername());
+        userRegisterDTO.setId(user.getId());
+        userRegisterDTO.setPassword(user.getPassword());
+        return userRegisterDTO;
     }
 
     @Override
